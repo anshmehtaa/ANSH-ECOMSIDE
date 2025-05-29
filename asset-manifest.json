@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/ANSH-ECOMSIDE/static/css/main.c8e760b8.css",
+    "main.js": "/ANSH-ECOMSIDE/static/js/main.6bf7c915.js",
+    "index.html": "/ANSH-ECOMSIDE/index.html",
+    "main.c8e760b8.css.map": "/ANSH-ECOMSIDE/static/css/main.c8e760b8.css.map",
+    "main.6bf7c915.js.map": "/ANSH-ECOMSIDE/static/js/main.6bf7c915.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c8e760b8.css",
+    "static/js/main.6bf7c915.js"
+  ]
+}
