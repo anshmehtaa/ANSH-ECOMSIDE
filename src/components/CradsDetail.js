@@ -13,9 +13,9 @@ const CradsDetail = () => {
   const dispatch = useDispatch();
   const getdata = useSelector((state) => state.cartreducer.carts);
     // console.log(getdata); 
-    const compare = ()=> {
+    const compare = ()=> { 
       let comparedata = getdata.filter((e)=>{
-        return e.id == id
+        return e.id == id;
       });
       setData(comparedata);
     }
