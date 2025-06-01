@@ -21,7 +21,7 @@ const Crads = () => {
 
 
     <div className='container mt-3'>
-      <h2 className='text-center'>Add to cart</h2>
+      <h2 className='text-center display-3 fw-bold text-danger '>ADD TO CARD</h2>
       <div className='row d-flex justify-content-center align-items-center'>
         {
           data.map((element, id) => {
