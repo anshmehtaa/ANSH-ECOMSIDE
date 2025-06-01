@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/ANSH-ECOMSIDE/static/css/main.e294e9dc.css",
-    "main.js": "/ANSH-ECOMSIDE/static/js/main.bbb2fe8d.js",
+    "main.js": "/ANSH-ECOMSIDE/static/js/main.497c41eb.js",
     "static/media/food-bg.jpg": "/ANSH-ECOMSIDE/static/media/food-bg.f304ebe8c62e40b071d8.jpg",
     "index.html": "/ANSH-ECOMSIDE/index.html",
     "main.e294e9dc.css.map": "/ANSH-ECOMSIDE/static/css/main.e294e9dc.css.map",
-    "main.bbb2fe8d.js.map": "/ANSH-ECOMSIDE/static/js/main.bbb2fe8d.js.map"
+    "main.497c41eb.js.map": "/ANSH-ECOMSIDE/static/js/main.497c41eb.js.map"
   },
   "entrypoints": [
     "static/css/main.e294e9dc.css",
-    "static/js/main.bbb2fe8d.js"
+    "static/js/main.497c41eb.js"
   ]
 }
