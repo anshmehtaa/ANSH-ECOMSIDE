@@ -1,136 +1,132 @@
 import React, { useEffect, useState } from "react";
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Badge from '@mui/material/Badge';
-import Navbar from 'react-bootstrap/Navbar';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import Badge from "@mui/material/Badge";
+import Menu from "@mui/material/Menu";
+import Table from "@mui/material/Table";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Table } from "@mui/material";
 import { DLT } from "../redux/actions/action";
+import "./Header.css"; // You can style components here
+import emptyCart from '../assets/empty-cart.jpg'; 
+
+
 
 const Header = () => {
-    const [price , setPrice]= useState(0)
-    // console.log(price)
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [totalPrice, setTotalPrice] = useState(0);
 
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cartreducer.carts);
 
+  const open = Boolean(anchorEl);
 
-    const getdata = useSelector((state) => state.cartreducer.carts);
-    console.log(getdata);
-    const dispatch = useDispatch();
-    const [anchorEl, setAnchorEl] = useState(null);
-    const open = Boolean(anchorEl);
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-    
-    const dlt = (id)=>{
-        dispatch(DLT(id))
-    }
-    const total =()=>{
-        let price = 0;
-        getdata.map((ele,k)=>{
-            price= ele.price + price
-        });
-        setPrice(price);
-        };
-        useEffect (()=>{
-            total();
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
-        },[total])
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
-    return (
-        <div>
-            <>
-                <Navbar bg="dark" data-bs-theme="dark" style={{ height: "60px" }}>
-                    <Container>
-                        <NavLink to="/" className="text-decoration-none text-light mx-3">Add to cart</NavLink>
-                        <Nav className="me-auto">
-                            <NavLink to="/" className="text-decoration-none text-light">Home</NavLink>
+  const removeItem = (id) => {
+    dispatch(DLT(id));
+  };
 
-                        </Nav>
-                        <Badge badgeContent={getdata.length} color="primary"
-                            id="basic-button"
-                            aria-controls={open ? 'basic-menu' : undefined}
-                            aria-haspopup="true"
-                            aria-expanded={open ? 'true' : undefined}
-                            onClick={handleClick}
-                        >
+  const calculateTotal = () => {
+    let price = 0;
+    cartItems.forEach((item) => {
+      price += item.price * item.qnty;
+    });
+    setTotalPrice(price);
+  };
 
+  useEffect(() => {
+    calculateTotal();
+  }, [cartItems]);
 
-                            <i class="fa-solid fa-cart-shopping text-light" style={{ fontSize: 25, cursor: "pointer" }}></i>
-                        </Badge>
+  return (
+    <Navbar bg="dark" variant="dark" expand="lg" className="sticky-top shadow-sm">
+      <Container>
+        <Navbar.Brand as={NavLink} to="/" className="fw-bold text-warning">FoodieZone</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ms-auto">
+            <Nav.Link as={NavLink} to="/" className="text-light">Home</Nav.Link>
+            <Nav.Link as={NavLink} to="/Crads" className="text-light">Order</Nav.Link>
+          </Nav>
 
-                    </Container>
-                    <Menu
-                        id="basic-menu"
-                        anchorEl={anchorEl}
-                        open={open}
-                        onClose={handleClose}
-                        MenuListProps={{
-                            'aria-labelledby': 'basic-button',
-                        }}
-                    >
-                        {
-                            getdata.length ?
-                                <div className="card_details" style={{ width: "24rem", padding: 10 }}>
-                                    <Table>
-                                        <thead>
-                                            <tr>
-                                                <th>Photo</th>
-                                                <th>Reataurant Name</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {
-                                                getdata.map((e) => {
-                                                    return (
-                                                        <>
-                                                            <tr>
-                                                                <td>
-                                                                    <NavLink to={`/cart/${e.id}`} onClick={handleClose}>
-                                                                    <img src={e.imgdata} style={{ width: "5rem", height: "5rem" }} alt="" /></NavLink>
-                                                                </td>
-                                                                <td>
-                                                                 <p>{e.rname}</p>
-                                                                 <p>Price : ₹{e.price}</p>
-                                                                 <p>Quantity : {e.qnty}</p>
-                                                                 <p style={{color:"red" , fontSize:20  , cursor: "pointer"}} onClick={()=>  dlt (e.id)}>
-                                                                    <i className="fas fa-trash smalltrash"></i>
-                                                                 </p>
-                                                                 </td>
-                                                                 <td className="mt-5 "style={{color:"red" , fontSize:20  , cursor: "pointer"}}onClick={()=>  dlt (e.id)}>
-                                                                 <i className="fas fa-trash largetrash"></i>
-                                                                 </td>
-                                                            </tr>
+          <Badge
+            badgeContent={cartItems.length}
+            color="primary"
+            onClick={handleClick}
+            sx={{ cursor: "pointer", ml: 3 }}
+          >
+            <i className="fa-solid fa-cart-shopping text-light fs-4"></i>
+          </Badge>
 
-                                                        </>
+          <Menu
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{ "aria-labelledby": "cart-button" }}
+            PaperProps={{ style: { width: 380 } }}
+          >
+            {cartItems.length ? (
+              <div className="p-2">
+                <Table>
+                  <thead>
+                    <tr>
+                      <th>Photo</th>
+                      <th>Details</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {cartItems.map((item) => (
+                      <tr key={item.id}>
+                        <td>
+                          <NavLink to={`/cart/${item.id}`} onClick={handleClose}>
+                            <img src={item.imgdata} alt="" width="60" height="60" />
+                          </NavLink>
+                        </td>
+                        <td>
+                          <p>{item.rname}</p>
+                          <p>Price: ₹{item.price}</p>
+                          <p>Qty: {item.qnty}</p>
+                          <i
+                            className="fas fa-trash text-danger"
+                            onClick={() => removeItem(item.id)}
+                            style={{ cursor: "pointer" }}
+                          ></i>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+                <p className="text-center fw-bold mt-2">Total: ₹{totalPrice}</p>
+              </div>
+            ) : (
+              <div className="text-center p-4">
+                <i
+                  className="fas fa-times text-danger"
+                  onClick={handleClose}
+                  style={{ cursor: "pointer", position: "absolute", top: 10, right: 20 }}
+                ></i>
+                <p className="mb-2">Your cart is empty</p>
+                <img
+                    src={emptyCart}
+                    alt="empty cart"
+                    width="100"
+                    className="mx-auto"
+/>
+              </div>
+            )}
+          </Menu>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  );
+};
 
-                                                    )
-                                                }
-
-                                                )
-                                            }
-                                            <p className="text-center">Total : ₹ {price}</p>
-                                        </tbody>
-                                    </Table>
-                                </div> :
-                                <div className="card_details d-flex justify-content-center align-items-center" style={{ width: "24rem", padding: 10, position: "relative" }}>
-                                    <i className="fas fa-close smallclose" onClick={handleClose} style={{ position: "absolute", top: 2, right: 20, fontSize: 23, cursor: "pointer" }}></i>
-
-                                    <p style={{ fontSize: 22 }}>card is empty</p>
-                                    <img src="Download.png" alt="" className="emptycart_img" style={{ width: "5rem", padding: 10 }} />
-                                </div>
-                        }
-
-                    </Menu>
-                </Navbar>
-            </>
-        </div >
-    )
-}
-export default Header
+export default Header;

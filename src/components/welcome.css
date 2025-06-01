@@ -1,0 +1,30 @@
+.welcome-container {
+  background: url('/src/assets/food-bg.jpg') no-repeat center center/cover;
+  color: #333;
+}
+
+.card {
+  border: none;
+  border-radius: 15px;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  background-color: #fff7e6;
+}
+/* header.css */
+.cart-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+}
+
+.navbar {
+  z-index: 1050;
+}
+
+.empty-cart {
+  text-align: center;
+  padding: 20px;
+}

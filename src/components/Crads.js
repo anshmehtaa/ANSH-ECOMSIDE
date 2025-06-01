@@ -53,4 +53,4 @@ const Crads = () => {
 
 }
 
-export default Crads
+export default Crads;

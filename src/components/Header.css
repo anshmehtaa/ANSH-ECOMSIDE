@@ -1,0 +1,14 @@
+.empty-cart {
+  text-align: center;
+  padding: 20px;
+}
+
+.navbar {
+  z-index: 1050;
+}
+
+.cart-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+}
