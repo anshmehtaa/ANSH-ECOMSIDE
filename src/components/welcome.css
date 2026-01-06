@@ -1,30 +1,47 @@
 .welcome-container {
-  background: url('/src/assets/food-bg.jpg') no-repeat center center/cover;
-  color: #333;
+  background: url("/src/assets/food-bg.jpg") no-repeat center center/cover;
 }
 
+/* Hero */
+.hero-section {
+  min-height: 90vh;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 40px;
+}
+
+.search-box {
+  width: 60%;
+  max-width: 500px;
+}
+
+/* Cards */
 .card {
   border: none;
   border-radius: 15px;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Categories */
+.category-card {
+  padding: 30px;
+  border-radius: 15px;
+  background: #fff;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.category-card:hover {
+  background: #ff5722;
+  color: white;
   transform: scale(1.05);
-  background-color: #fff7e6;
-}
-/* header.css */
-.cart-img {
-  width: 60px;
-  height: 60px;
-  object-fit: cover;
 }
 
-.navbar {
-  z-index: 1050;
-}
-
-.empty-cart {
-  text-align: center;
-  padding: 20px;
+/* CTA */
+.cta-section {
+  background: linear-gradient(45deg, #ff5722, #ff9800);
 }

@@ -1,56 +1,90 @@
-import React, { useState } from 'react'
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import cardsData from './cardsData';
-import "./style.css";
-import { useDispatch } from 'react-redux';
-import { ADD } from '../redux/actions/action';
+import React, { useState } from "react";
+import { Button, Card, Alert, Badge } from "react-bootstrap";
+import cardsData from "./cardsData";
+import "./Crads.css";
+import { useDispatch } from "react-redux";
+import { ADD } from "../redux/actions/action";
 
 const Crads = () => {
-  const [data, setData] = useState(cardsData);
+  const [data] = useState(cardsData);
+  const [showMsgId, setShowMsgId] = useState(null);
+  const [qty, setQty] = useState({});
+  const dispatch = useDispatch();
 
+  const send = (item, id) => {
+    // ✅ Use qnty, not qty
+    dispatch(ADD({ ...item, qnty: qty[id] || 1 }));
+    setShowMsgId(id);
+    setTimeout(() => setShowMsgId(null), 1500);
+  };
 
-  const dispatch = useDispatch ();
+  const updateQty = (id, value) => {
+    setQty({ ...qty, [id]: Math.max(1, value) });
+  };
 
-  const send = (e) =>{
-    // console.log (e);
-    dispatch(ADD(e));
-
-  }
   return (
+    <div className="container d-flex flex-column min-vh-100">
+      <h2 className="text-center display-4 fw-bold text-danger my-4">
+        🍽️ Explore Our Menu
+      </h2>
 
-
-    <div className='container mt-3'>
-      <h2 className='text-center display-3 fw-bold text-danger '>ADD TO CARD</h2>
-      <div className='row d-flex justify-content-center align-items-center'>
-        {
-          data.map((element, id) => {
-          return (
-        <>
-          <Card style={{ width: '22rem',border:"none" }} className='mx-2 mt-4 card_style'>
-            <Card.Img variant="top" src= {element.imgdata} style={{height :"16rem"}} className='mt-3' />
-            <Card.Body>
-              <Card.Title>{element. rname}</Card.Title>
-              <Card.Text>
-               Price : ₹{element.price}
-              </Card.Text>
-              <div className='button_div d-flex justify-content-center'>
-              <Button variant="primary"
-              onClick={()=>  send(element) }
-               className='col-lg-12'>Add to card</Button>
+      <div className="row justify-content-center">
+        {data.map((item, id) => (
+          <div className="col-lg-4 col-md-6 mb-4" key={id}>
+            <Card className="food-card h-100">
+              <div className="img-wrapper">
+                <img src={item.imgdata} alt={item.rname} className="food-img" />
+                <Badge bg="success" className="price-badge">
+                  ₹{item.price}
+                </Badge>
               </div>
-              
-            </Card.Body>
-          </Card>
-        </>
-        )
-      })
-      }
 
+              <Card.Body className="d-flex flex-column">
+                <Card.Title className="fw-bold">{item.rname}</Card.Title>
+                <p className="text-muted small">
+                  Fresh & delicious food prepared by top chefs.
+                </p>
+
+                <div className="rating">⭐⭐⭐⭐☆</div>
+
+                {/* Quantity Selector */}
+                <div className="d-flex justify-content-between align-items-center my-3">
+                  <span className="fw-semibold">Quantity</span>
+                  <div className="qty-control">
+                    <button onClick={() => updateQty(id, (qty[id] || 1) - 1)}>-</button>
+                    <span>{qty[id] || 1}</span>
+                    <button onClick={() => updateQty(id, (qty[id] || 1) + 1)}>+</button>
+                  </div>
+                </div>
+
+                <Button
+                  variant="danger"
+                  className="mt-auto w-100 add-cart-btn"
+                  onClick={() => send(item, id)}
+                >
+                  🛒 Add to Cart
+                </Button>
+
+                {showMsgId === id && (
+                  <Alert variant="success" className="text-center mt-3 py-1">
+                    ✔ Added to cart
+                  </Alert>
+                )}
+              </Card.Body>
+            </Card>
+          </div>
+        ))}
       </div>
-    </div>
-  )
 
-}
+      {/* Footer */}
+      <footer className="bg-dark text-light text-center py-3 mt-auto">
+        <p className="mb-0">
+          &copy; {new Date().getFullYear()} FoodieZone. All rights reserved.
+        </p>
+        <small>Made with ❤️ by Ansh Mehta</small>
+      </footer>
+    </div>
+  );
+};
 
 export default Crads;
