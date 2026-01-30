@@ -1,122 +1,109 @@
-import React from "react";
+import React, { useState } from "react";
 import AdminSidebar from "./AdminSidebar";
-import Settings from "./setting/Setting";
 import { useNavigate } from "react-router-dom";
-
+import "./AdminHome.css";
 
 export default function AdminHome() {
   const navigate = useNavigate();
+  const [showSidebar, setShowSidebar] = useState(false);
+
   return (
-    <div className="container-fluid my-3">
-      <div className="row">
-        
-        {/* Sidebar */}
-        <div className="col-md-3">
-          <AdminSidebar />
-        </div>
+    <div className="admin-layout">
 
-        {/* Main Content */}
-        <div className="col-md-9">
-          <h5 className="bg-dark text-white text-center py-3 rounded">
-            Admin Dashboard
-          </h5>
+      {/* Mobile Header */}
+      <div className="d-md-none d-flex justify-content-between align-items-center bg-dark text-white p-2">
+        <button
+          className="btn btn-outline-light"
+          onClick={() => setShowSidebar(true)}
+        >
+          <i className="bi bi-list fs-4"></i>
+        </button>
+        <span className="fw-bold">Food Admin</span>
+      </div>
 
-          {/* Stats Cards */}
-          <div className="row mb-3">
-            {[
-              { title: "Total Orders", value: "1,245" },
-              { title: "Total Revenue", value: "₹2,45,300" },
-              { title: "Total Customers", value: "620" },
-              { title: "Total Foods", value: "85" },
-            ].map((item, index) => (
-              <div className="col-md-3" key={index}>
-                <div className="card shadow-sm text-center">
-                  <div className="card-body">
-                    <h6>{item.title}</h6>
-                    <h4 className="fw-bold">{item.value}</h4>
-                  </div>
+      {/* Mobile Backdrop */}
+      {showSidebar && (
+        <div
+          className="sidebar-backdrop d-md-none"
+          onClick={() => setShowSidebar(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <div className={`sidebar-wrapper ${showSidebar ? "show" : ""}`}>
+        <AdminSidebar closeSidebar={() => setShowSidebar(false)} />
+      </div>
+
+      {/* Main Content */}
+      <div className="admin-content">
+        <h4 className="fw-bold mb-3">Dashboard Overview</h4>
+
+        {/* KPI Cards */}
+        <div className="row g-3 mb-4">
+          {[
+            { title: "Today's Orders", value: "42", icon: "bag-check", color: "primary" },
+            { title: "Today's Revenue", value: "₹8,450", icon: "currency-rupee", color: "success" },
+            { title: "Pending Orders", value: "6", icon: "clock-history", color: "warning" },
+            { title: "Total Foods", value: "85", icon: "fork-knife", color: "dark" },
+          ].map((item, index) => (
+            <div className="col-6 col-md-3" key={index}>
+              <div className={`card shadow-sm text-center border-${item.color}`}>
+                <div className="card-body">
+                  <i className={`bi bi-${item.icon} fs-3 text-${item.color}`}></i>
+                  <h6 className="mt-2">{item.title}</h6>
+                  <h4 className="fw-bold">{item.value}</h4>
                 </div>
               </div>
-            ))}
-          </div>
-
-          {/* Recent Orders */}
-          <div className="card shadow-sm mb-3">
-            <div className="card-header bg-dark text-white">
-              Recent Orders
             </div>
-
-            <div className="card-body p-0">
-              <div className="table-responsive">
-                <table className="table table-bordered table-hover mb-0 text-center">
-                  <thead className="table-dark">
-                    <tr>
-                      <th>#</th>
-                      <th>Order ID</th>
-                      <th>Customer</th>
-                      <th>Total (₹)</th>
-                      <th>Status</th>
-                      <th>Date</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>ORD1005</td>
-                      <td>Amit Patel</td>
-                      <td>520</td>
-                      <td>
-                        <span className="badge bg-warning text-dark">
-                          Preparing
-                        </span>
-                      </td>
-                      <td>01-Jan-2026</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>ORD1004</td>
-                      <td>Neha Shah</td>
-                      <td>310</td>
-                      <td>
-                        <span className="badge bg-success">
-                          Delivered
-                        </span>
-                      </td>
-                      <td>01-Jan-2026</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>ORD1003</td>
-                      <td>Rahul Sharma</td>
-                      <td>450</td>
-                      <td>
-                        <span className="badge bg-info text-dark">
-                          Out for Delivery
-                        </span>
-                      </td>
-                      <td>31-Dec-2025</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-
-          {/* Quick Actions */}
-          <div className="card shadow-sm">
-            <div className="card-header bg-dark text-white">
-              Quick Actions
-            </div>
-            <div className="card-body text-center">
-              <button className="btn btn-primary me-2">View Orders</button>
-              <button className="btn btn-success me-2">Add Food</button>
-              <button className="btn btn-warning me-2">View Customers</button>
-                <button className="btn btn-secondary" onClick={() => navigate("/admin/Setting")}>Settings </button>
-
-            </div>
-          </div>
-
+          ))}
         </div>
+
+        {/* Recent Orders */}
+        <div className="card shadow-sm">
+          <div className="card-header bg-dark text-white d-flex justify-content-between">
+            <span>Recent Orders</span>
+            <button
+              className="btn btn-sm btn-light"
+              onClick={() => navigate("/admin/orderlist")}
+            >
+              View All
+            </button>
+          </div>
+
+          <div className="table-responsive">
+            <table className="table table-hover mb-0 text-center">
+              <thead className="table-light">
+                <tr>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>#ORD1021</td>
+                  <td>Amit</td>
+                  <td>₹520</td>
+                  <td><span className="badge bg-warning text-dark">Preparing</span></td>
+                </tr>
+                <tr>
+                  <td>#ORD1020</td>
+                  <td>Neha</td>
+                  <td>₹310</td>
+                  <td><span className="badge bg-success">Delivered</span></td>
+                </tr>
+                <tr>
+                  <td>#ORD1019</td>
+                  <td>Rahul</td>
+                  <td>₹450</td>
+                  <td><span className="badge bg-info text-dark">Out for Delivery</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
       </div>
     </div>
   );

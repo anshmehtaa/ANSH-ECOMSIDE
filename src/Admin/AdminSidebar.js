@@ -1,63 +1,34 @@
-
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import "./AdminSidebar.css";
 
+export default function AdminSidebar({ closeSidebar }) {
+  const menu = [
+    { to: "/admin", icon: "house-check-fill", label: "Home" },
+    { to: "/admin/orderlist", icon: "list-ul", label: "Orders" },
+    { to: "/admin/analytics", icon: "bar-chart-fill", label: "Analytics" },
+    { to: "/admin/food", icon: "fork-knife", label: "Food" },
+    { to: "/admin/customer", icon: "person-fill", label: "Customers" },
+    { to: "/admin/setting", icon: "gear-fill", label: "Settings" },
+    { to: "/admin/contect", icon: "person-lines-fill", label: "Contact" },
+  ];
 
-export default function AdminSidebar() {
-    return (
-      
-        <div className="list-group">
-        <Link
-  to="/admin"
-  className="list-group-item mybackground d-flex justify-content-between align-items-center"
->
-  <i className="bi bi-house-check-fill fs-2"></i>
-  <span>Home</span>
-</Link>
-
-       
-  
- <Link to="/admin/orderlist" className="list-group-item mybackground d-flex justify-content-between align-items-center " aria-current>
-    <i className="bi bi-list-ul fs-2"></i>
-    <span> Order List</span>
-</Link>
- <Link to="/admin/orderdetail" className="list-group-item mybackground d-flex justify-content-between align-items-center" aria-current>
-    <i className="bi bi-ticket-detailed-fill fs-2"></i>
-    <span> Order Detail</span>
-</Link>
- <Link to="/admin/analytics" className="list-group-item mybackground d-flex justify-content-between align-items-center" aria-current>
-    <i className="bi bi-bar-chart-fill fs-2"></i>
-    <span> Analytics</span>
-</Link>
-<Link to="/admin/review" className="list-group-item mybackground d-flex justify-content-between align-items-center" aria-current>
-    <i className="bi bi-yelp fs-2"></i>
-    <span> Review</span>
-</Link>
-<Link to="/admin/food" className="list-group-item mybackground d-flex justify-content-between align-items-center" aria-current>
-    <i className="bi bi-fork-knife fs-2"></i>
-    <span> Food</span>
-</Link>
-<Link to="/admin/fooddetail" className="list-group-item mybackground d-flex justify-content-between align-items-center" aria-current>
-    <i className="bi bi-ticket-detailed fs-2"></i>
-    <span> Food Detail</span>
-</Link>
-<Link to="/admin/customer" className="list-group-item mybackground d-flex justify-content-between align-items-center" aria-current>
-    <i className="bi bi-person-plus-fill fs-2"></i>
-    <span> Custmer Detail</span>
-</Link>
-
-<Link to="/admin/setting" className="list-group-item mybackground d-flex justify-content-between align-items-center" aria-current>
-    <i className="bi bi-gear-fill fs-2"></i>
-    <span> Settings</span>
-</Link>
-<Link to="/admin/contect" className="list-group-item mybackground d-flex justify-content-between align-items-center" aria-current>
-    <i className="bi bi-person-lines-fill fs-2"></i>
-    <span> Contect Us</span>
-</Link>
-
-
-
-
-</div>
-    );
+  return (
+    <div className="admin-sidebar">
+      {menu.map((item, index) => (
+        <NavLink
+          key={index}
+          to={item.to}
+          end
+          onClick={closeSidebar}
+          className={({ isActive }) =>
+            `sidebar-link ${isActive ? "active" : ""}`
+          }
+        >
+          <i className={`bi bi-${item.icon}`}></i>
+          <span>{item.label}</span>
+        </NavLink>
+      ))}
+    </div>
+  );
 }

@@ -1,0 +1,17 @@
+.admin-layout {
+  display: flex;
+}
+
+/* Main Content */
+.admin-content {
+  margin-left: 240px;
+  padding: 1rem;
+  width: 100%;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .admin-content {
+    margin-left: 0;
+  }
+}
