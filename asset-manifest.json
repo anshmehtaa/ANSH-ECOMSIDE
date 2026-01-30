@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/ANSH-ECOMSIDE/static/css/main.9e9c9bf6.css",
-    "main.js": "/ANSH-ECOMSIDE/static/js/main.f8b76795.js",
+    "main.css": "/ANSH-ECOMSIDE/static/css/main.52687b87.css",
+    "main.js": "/ANSH-ECOMSIDE/static/js/main.e62a1c21.js",
     "static/media/bootstrap-icons.woff?": "/ANSH-ECOMSIDE/static/media/bootstrap-icons.1295669cd4e305c97f2c.woff",
     "static/media/bootstrap-icons.woff2?": "/ANSH-ECOMSIDE/static/media/bootstrap-icons.92ea18a81d737146ff04.woff2",
     "static/media/food-bg.jpg": "/ANSH-ECOMSIDE/static/media/food-bg.f304ebe8c62e40b071d8.jpg",
     "index.html": "/ANSH-ECOMSIDE/index.html",
-    "main.9e9c9bf6.css.map": "/ANSH-ECOMSIDE/static/css/main.9e9c9bf6.css.map",
-    "main.f8b76795.js.map": "/ANSH-ECOMSIDE/static/js/main.f8b76795.js.map"
+    "main.52687b87.css.map": "/ANSH-ECOMSIDE/static/css/main.52687b87.css.map",
+    "main.e62a1c21.js.map": "/ANSH-ECOMSIDE/static/js/main.e62a1c21.js.map"
   },
   "entrypoints": [
-    "static/css/main.9e9c9bf6.css",
-    "static/js/main.f8b76795.js"
+    "static/css/main.52687b87.css",
+    "static/js/main.e62a1c21.js"
   ]
 }
